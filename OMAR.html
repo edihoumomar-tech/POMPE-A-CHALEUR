@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de Génétique Humaine</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f9fc;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4a90e2;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+        
+        .content-nav {
+            background-color: #e8f4fc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+        
+        .content-nav h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: #357ae8;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4a90e2;
+        }
+        
+        .section h3 {
+            color: #3498db;
+            margin: 20px 0 10px 0;
+        }
+        
+        .question {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .answer {
+            background-color: #e8f6f3;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #1abc9c;
+            display: none;
+        }
+        
+        .show-answer-btn {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .show-answer-btn:hover {
+            background-color: #e67e22;
+        }
+        
+        .document {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .document-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .document-title::before {
+            content: "📄";
+            margin-right: 10px;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .genetic-term {
+            color: #9b59b6;
+            font-weight: bold;
+            cursor: help;
+            border-bottom: 1px dotted #9b59b6;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: normal;
+            font-size: 0.9rem;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .exercise {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #3498db;
+        }
+        
+        .exercise h3 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        
+        .interactive-diagram {
+            background-color: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .diagram-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .diagram-btn {
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .diagram-btn:hover {
+            background-color: #8e44ad;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .page-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Génétique Humaine</h1>
+            <p class="subtitle">Transmission des caractères héréditaires chez l'Homme</p>
+        </header>
+        
+        <div class="content-nav">
+            <h2>Navigation rapide</h2>
+            <div class="nav-links">
+                <button class="nav-btn" data-section="intro">Introduction</button>
+                <button class="nav-btn" data-section="difficulties">Difficultés d'étude</button>
+                <button class="nav-btn" data-section="methods">Méthodes d'étude</button>
+                <button class="nav-btn" data-section="autosomal">Maladies autosomales</button>
+                <button class="nav-btn" data-section="sex-linked">Maladies liées au sexe</button>
+                <button class="nav-btn" data-section="anomalies">Anomalies chromosomiques</button>
+                <button class="nav-btn" data-section="diagnostic">Diagnostic prénatal</button>
+            </div>
+        </div>
+        
+        <div class="section" id="intro">
+            <h2>Introduction à la génétique humaine</h2>
+            <p>La génétique humaine, branche de la génétique, étudie la transmission des caractères héréditaires chez l'Homme au cours des générations. Devant les difficultés qui entravent cette étude, les chercheurs se sont penchés, surtout, sur l'étude des modalités de la transmission des maladies et malformations héréditaires, pour accumuler des connaissances sur les gènes qui en sont responsables.</p>
+            
+            <div class="question">
+                <p>➢ Quelles sont les difficultés d'étude de l'hérédité humaine ? Quels sont les moyens utilisés ?</p>
+                <p>➢ Comment certaines maladies héréditaires se transmettent-elles au cours des générations ?</p>
+            </div>
+        </div>
+        
+        <div class="section" id="difficulties">
+            <h2>I. La génétique humaine : difficultés d'étude et certains moyens utilisés</h2>
+            
+            <h3>1. Difficultés d'étude de la génétique humaine</h3>
+            
+            <div class="document">
+                <div class="document-title">Document 1: Certaines difficultés d'étude de la génétique humaine</div>
+                <p>La transmission des caractères héréditaires chez l'Homme est semblable à celle chez les autres êtres vivants. Les lois de l'hérédité, définies précédemment, restent valables. Cependant il existe un ensemble de difficultés qui empêchent l'expérimentation et la vérification de ces lois, dont les principales sont les suivantes:</p>
+                <ul>
+                    <li>Les croisements orientés sont impossibles.</li>
+                    <li>Faible fécondité, la longue durée de la grossesse et de celle qui sépare deux générations.</li>
+                    <li>Le nombre élevé de chromosomes.</li>
+                </ul>
+            </div>
+            
+            <div class="question">
+                <p>Identifiez certaines difficultés d'étude de l'hérédité humaine.</p>
+                <button class="show-answer-btn">Voir la réponse</button>
+                <div class="answer">
+                    <p>Les principales difficultés sont:</p>
+                    <ol>
+                        <li><span class="highlight">Impossibilité de croisements orientés</span>: Contrairement aux plantes ou animaux de laboratoire, on ne peut pas contrôler les unions humaines.</li>
+                        <li><span class="highlight">Faible fécondité</span>: Les humains ont peu d'enfants comparé à d'autres espèces, ce qui réduit les données disponibles pour l'analyse.</li>
+                        <li><span class="highlight">Longue durée des générations</span>: Il faut environ 25-30 ans pour qu'une nouvelle génération atteigne l'âge de reproduction.</li>
+                        <li><span class="highlight">Nombre élevé de chromosomes</span>: Le génome humain compte 46 chromosomes, ce qui complique l'analyse des transmissions.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="methods">
+            <h3>2. Certains moyens d'étude de la génétique humaine</h3>
+            
+            <h4>a. Arbres généalogiques</h4>
+            <p><span class="genetic-term tooltip">Arbre généalogique<span class="tooltiptext">Représentation schématique simplifiée des liens de parenté existant au sein d'une famille. Il permet de suivre la transmission d'un caractère, ou d'une maladie héréditaire, au cours des générations au sein d'une même famille.</span></span>: Représentation schématique simplifiée des liens de parenté existant au sein d'une famille. Il permet de suivre la transmission d'un caractère, ou d'une maladie héréditaire, au cours des générations au sein d'une même famille.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Symbole</th>
+                            <th>Signification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">□</td>
+                            <td>Homme sain</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">○</td>
+                            <td>Femme saine</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">■</td>
+                            <td>Homme malade</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">●</td>
+                            <td>Femme malade</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">◇</td>
+                            <td>Sexe inconnu</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h4>b. Cartes chromosomiques (ou caryotypes)</h4>
+            <p>Le <span class="genetic-term tooltip">caryotype<span class="tooltiptext">Représentation photographique des chromosomes d'une cellule, classés par paires selon leur taille et leur forme. Permet de détecter des anomalies chromosomiques.</span></span> est une représentation des chromosomes d'un individu, classés par paires selon leur taille et la position du centromère.</p>
+            
+            <div class="interactive-diagram">
+                <h4>Caryotype humain normal</h4>
+                <div id="karyotype-diagram">
+                    <svg width="100%" height="200" viewBox="0 0 800 200" id="karyotype-svg">
+                        <!-- Les chromosomes seront ajoutés par JavaScript -->
+                    </svg>
+                </div>
+                <div class="diagram-controls">
+                    <button class="diagram-btn" id="normal-karyotype">Caryotype normal</button>
+                    <button class="diagram-btn" id="trisomy-21">Trisomie 21</button>
+                    <button class="diagram-btn" id="turner">Syndrome de Turner</button>
+                </div>
+            </div>
+            
+            <h4>c. Analyse de l'ADN par électrophorèse</h4>
+            <p>L'<span class="genetic-term tooltip">électrophorèse<span class="tooltiptext">Technique de séparation des molécules d'ADN en fonction de leur taille sous l'effet d'un champ électrique. Permet d'identifier des mutations génétiques.</span></span> est une méthode de séparation et de caractérisation de molécules (protéines et acides nucléiques) à l'aide d'un champ électrique. Les molécules migrent vers l'électrode de signe opposé à leur charge.</p>
+            
+            <div class="exercise">
+                <h3>Exercice intégré</h3>
+                <p>Dans le but de préciser le mode de transmission d'une maladie héréditaire, on a réalisé l'analyse d'ADN grâce à la technique de l'électrophorèse, chez certains membres d'une famille dont S1 et S3 sont respectivement une fille et un garçon atteints.</p>
+                
+                <div class="question">
+                    <p>1. L'allèle de la maladie est-il dominant ou récessif?</p>
+                    <p>2. Le gène qui contrôle cette maladie est-il autosomal ou lié au sexe?</p>
+                    <button class="show-answer-btn">Voir la réponse</button>
+                    <div class="answer">
+                        <p><strong>1.</strong> L'allèle responsable de la maladie est <span class="highlight">dominant</span>.</p>
+                        <p><strong>2.</strong> Le gène qui contrôle cette maladie est <span class="highlight">autosomal</span> (ni lié à X ni à Y). C'est donc une maladie dominante autosomale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="autosomal">
+            <h2>II. Transmission d'une maladie héréditaire autosomal</h2>
+            
+            <h3>1. Transmission de la mucoviscidose</h3>
+            <p>La <span class="genetic-term tooltip">mucoviscidose<span class="tooltiptext">Maladie génétique due à une mutation du gène CFTR qui entraîne la synthèse d'un mucus anormalement épais et collant, causant des problèmes respiratoires et digestifs.</span></span> est une maladie génétique due à une mutation du gène CFTR qui entraîne la synthèse d'un mucus anormalement épais et collant, d'où des problèmes respiratoires, digestifs...</p>
+            
+            <div class="question">
+                <p>1. L'allèle responsable de la mucoviscidose est-il dominant ou récessif? Justifiez votre réponse.</p>
+                <p>2. L'allèle responsable de la maladie est-il porté par un autosome ou un gonosome?</p>
+                <button class="show-answer-btn">Voir la réponse</button>
+                <div class="answer">
+                    <p><strong>1.</strong> L'allèle responsable de la maladie est <span class="highlight">récessif</span> car la fille II₃, malade, est issue de parents (I₁ et I₂) sains.</p>
+                    <p><strong>2.</strong> Le gène responsable de la maladie est <span class="highlight">autosomal</span> (porté par un autosome).</p>
+                </div>
+            </div>
+            
+            <h3>2. Transmission de la Chorée de Huntington</h3>
+            <p>La <span class="genetic-term tooltip">chorée de Huntington<span class="tooltiptext">Maladie neurodégénérative qui apparaît tardivement (30-50 ans). La personne malade perd peu à peu ses fonctions intellectuelles et doit faire face à des troubles moteurs.</span></span> est une maladie neurodégénérative qui apparaît tardivement, entre 30 et 50 ans. La personne malade perd, peu à peu, ses fonctions intellectuelles et doit faire face à des troubles moteurs.</p>
+            
+            <div class="question">
+                <p>1. Déterminez le mode de transmission de cette maladie.</p>
+                <p>2. Calculez la probabilité pour que l'individu IV₂ soit atteint de cette maladie.</p>
+                <button class="show-answer-btn">Voir la réponse</button>
+                <div class="answer">
+                    <p><strong>1.</strong> Tous les individus malades ont au moins un parent malade, de plus la maladie existe dans toutes les générations. On déduit que l'allèle responsable de la maladie est <span class="highlight">dominant</span> et le gène est <span class="highlight">autosomal</span>.</p>
+                    <p><strong>2.</strong> La probabilité pour que l'individu IV₂ soit atteint de cette maladie est de <span class="highlight">50%</span>.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="sex-linked">
+            <h2>III. Transmission des maladies héréditaires liées aux chromosomes sexuels</h2>
+            
+            <h3>1. Transmission du daltonisme</h3>
+            <p>Le <span class="genetic-term tooltip">daltonisme<span class="tooltiptext">Anomalie visuelle où les individus atteints présentent des troubles de la vision des couleurs, notamment pour distinguer le vert et le rouge.</span></span> est une anomalie dans laquelle les individus atteints présentent des troubles visuels. De tel sorte que les malades ne distinguent pas la couleur verte et rouge.</p>
+            
+            <div class="question">
+                <p>1. L'allèle responsable de la maladie est-il dominant ou récessif?</p>
+                <p>2. L'allèle responsable de la maladie est-il porté par un autosome ou un gonosome?</p>
+                <button class="show-answer-btn">Voir la réponse</button>
+                <div class="answer">
+                    <p><strong>1.</strong> L'allèle responsable de la maladie est <span class="highlight">récessif</span> car le garçon II₂, malade, est issu de parents (I₁ et I₂) sains.</p>
+                    <p><strong>2.</strong> Le gène responsable de la maladie est porté par le <span class="highlight">chromosome sexuel X</span>.</p>
+                </div>
+            </div>
+            
+            <h3>2. Transmission de l'hypertrichose</h3>
+            <p>L'<span class="genetic-term tooltip">hypertrichose<span class="tooltiptext">Développement anormal des poils sur le bord des oreilles. Transmise par le chromosome Y.</span></span> est caractérisée par un développement anormal des poils sur le bord des oreilles.</p>
+            
+            <div class="question">
+                <p>Montrez que l'allèle responsable du développement anormal des poils sur les oreilles est porté par le chromosome Y.</p>
+                <button class="show-answer-btn">Voir la réponse</button>
+                <div class="answer">
+                    <p>On observe que tous les garçons issus d'un père malade sont malades (l'anomalie existe uniquement chez les hommes). Donc le gène responsable du développement anormal des poils sur les oreilles est porté par le <span class="highlight">chromosome Y</span> (les filles sont saines puisqu'elles ne possèdent pas le chromosome Y).</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="anomalies">
+            <h2>IV. Les anomalies chromosomiques</h2>
+            
+            <h3>1. Les anomalies de nombre</h3>
+            
+            <h4>a. Variation du nombre d'autosomes</h4>
+            <p>La <span class="genetic-term tooltip">trisomie 21<span class="tooltiptext">Anomalie chromosomique caractérisée par la présence d'un troisième chromosome 21. Responsable du syndrome de Down.</span></span> (syndrome de Down) résulte de la non-disjonction des chromosomes 21 au cours de la méiose chez l'un des parents.</p>
+            
+            <h4>b. Variation du nombre de chromosomes sexuels</h4>
+            <p>Le <span class="genetic-term tooltip">syndrome de Turner<span class="tooltiptext">Anomalie chromosomique caractérisée par l'absence d'un chromosome X chez une femme (45,X).</span></span> (monosomie X) affecte des sujets féminins, ces femmes restent de petite taille, sont stériles et leurs caractères sexuels secondaires ne se développent pas.</p>
+            
+            <p>Le <span class="genetic-term tooltip">syndrome de Klinefelter<span class="tooltiptext">Anomalie chromosomique caractérisée par la présence d'un chromosome X supplémentaire chez un homme (47,XXY).</span></span> affecte les hommes, qui restent stériles et présentent parfois un développement anormal des seins, en plus chez ces sujets, on observe souvent un retard mental.</p>
+            
+            <div class="question">
+                <p>1. Donnez la formule chromosomique correspondante à chaque caryotype.</p>
+                <p>2. Proposez une explication pour l'origine de ces deux anomalies.</p>
+                <button class="show-answer-btn">Voir la réponse</button>
+                <div class="answer">
+                    <p><strong>1.</strong></p>
+                    <ul>
+                        <li>Syndrome de Turner: <span class="highlight">44A+X</span> (2n-1 = 45 chromosomes)</li>
+                        <li>Syndrome de Klinefelter: <span class="highlight">44A+XXY</span> (2n+1 = 47 chromosomes)</li>
+                    </ul>
+                    <p><strong>2.</strong> Ces anomalies résultent d'une non-disjonction des chromosomes sexuels lors de la méiose chez l'un des parents.</p>
+                </div>
+            </div>
+            
+            <h3>2. Les anomalies de structure</h3>
+            <p>Les anomalies de structure chromosomique incluent:</p>
+            <ul>
+                <li><span class="highlight">Délétion</span>: Perte d'un fragment de chromosome</li>
+                <li><span class="highlight">Duplication</span>: Présence d'un fragment en double</li>
+                <li><span class="highlight">Translocation</span>: Transfert d'un fragment d'un chromosome à un autre</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="diagnostic">
+            <h2>V. Diagnostic prénatal des maladies génétiques</h2>
+            
+            <p>Le diagnostic prénatal permet de détecter des anomalies génétiques ou chromosomiques chez le fœtus pendant la grossesse.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Technique</th>
+                            <th>Description</th>
+                            <th>Période</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Amniocentèse</strong></td>
+                            <td>Prélèvement de liquide amniotique contenant des cellules fœtales</td>
+                            <td>À partir de la 14<sup>ème</sup> semaine</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Biopsie fœtale</strong></td>
+                            <td>Prélèvement de villosités choriales du placenta</td>
+                            <td>Entre la 10<sup>ème</sup> et 12<sup>ème</sup> semaine</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fœtoscopie</strong></td>
+                            <td>Prélèvement de sang fœtal via le cordon ombilical</td>
+                            <td>À partir de la 18<sup>ème</sup> semaine</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Échographie</strong></td>
+                            <td>Observation du fœtus par ultrasons</td>
+                            <td>Tout au long de la grossesse</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Cours de Génétique Humaine - Document pédagogique</p>
+            <p>moussa.svt@gmail.com</p>
+            <p>Utilisez les boutons de navigation pour parcourir les différentes sections du cours.</p>
+        </footer>
+    </div>
+    
+    <div class="page-indicator">Page: <span id="current-page">Introduction</span></div>
+
+    <script>
+        // Navigation entre les sections
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const sectionId = this.getAttribute('data-section');
+                const section = document.getElementById(sectionId);
+                
+                if (section) {
+                    // Mettre à jour l'indicateur de page
+                    document.getElementById('current-page').textContent = this.textContent;
+                    
+                    // Faire défiler jusqu'à la section
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Ajouter un effet visuel temporaire
+                    section.style.backgroundColor = '#f0f7ff';
+                    setTimeout(() => {
+                        section.style.backgroundColor = '';
+                    }, 1500);
+                }
+            });
+        });
+        
+        // Afficher/masquer les réponses aux questions
+        document.querySelectorAll('.show-answer-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    this.textContent = 'Voir la réponse';
+                } else {
+                    answer.style.display = 'block';
+                    this.textContent = 'Masquer la réponse';
+                }
+            });
+        });
+        
+        // Créer un diagramme de caryotype interactif
+        const karyotypeSvg = document.getElementById('karyotype-svg');
+        
+        // Fonction pour dessiner des chromosomes
+        function drawChromosome(x, y, width, height, isX = false, isY = false, extra = false) {
+            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            
+            // Corps du chromosome
+            const body = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            body.setAttribute("x", x);
+            body.setAttribute("y", y);
+            body.setAttribute("width", width);
+            body.setAttribute("height", height);
+            body.setAttribute("fill", isX ? "#FF6B9D" : isY ? "#4A90E2" : "#2C3E50");
+            body.setAttribute("stroke", "#FFFFFF");
+            body.setAttribute("stroke-width", "1");
+            group.appendChild(body);
+            
+            // Centromère
+            const centromere = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            centromere.setAttribute("x", x);
+            centromere.setAttribute("y", y + height/2 - 3);
+            centromere.setAttribute("width", width);
+            centromere.setAttribute("height", 6);
+            centromere.setAttribute("fill", isX ? "#D81B60" : isY ? "#357AE8" : "#1A252F");
+            group.appendChild(centromere);
+            
+            // Bras du chromosome (si nécessaire)
+            if (extra) {
+                const extraArm = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                extraArm.setAttribute("x", x - 5);
+                extraArm.setAttribute("y", y);
+                extraArm.setAttribute("width", 5);
+                extraArm.setAttribute("height", height/3);
+                extraArm.setAttribute("fill", isX ? "#FF6B9D" : isY ? "#4A90E2" : "#2C3E50");
+                group.appendChild(extraArm);
+            }
+            
+            return group;
+        }
+        
+        // Fonction pour dessiner un caryotype normal
+        function drawNormalKaryotype() {
+            karyotypeSvg.innerHTML = '';
+            
+            // Autosomes (paires 1-22)
+            for (let i = 0; i < 7; i++) {
+                for (let j = 0; j < 2; j++) {
+                    const x = 50 + i * 100;
+                    const y = 30 + j * 80;
+                    const width = 20 + (7 - i) * 3;
+                    const height = 60 - i * 5;
+                    
+                    const chromosome = drawChromosome(x, y, width, height);
+                    karyotypeSvg.appendChild(chromosome);
+                }
+            }
+            
+            // Chromosomes sexuels
+            const xChromosome = drawChromosome(750, 30, 25, 50, true);
+            const yChromosome = drawChromosome(750, 110, 15, 40, false, true);
+            karyotypeSvg.appendChild(xChromosome);
+            karyotypeSvg.appendChild(yChromosome);
+            
+            // Ajouter des étiquettes
+            const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            label.setAttribute("x", 400);
+            label.setAttribute("y", 180);
+            label.setAttribute("text-anchor", "middle");
+            label.setAttribute("font-size", "16");
+            label.setAttribute("fill", "#2C3E50");
+            label.textContent = "Caryotype humain normal: 46,XY (homme) ou 46,XX (femme)";
+            karyotypeSvg.appendChild(label);
+        }
+        
+        // Fonction pour dessiner un caryotype avec trisomie 21
+        function drawTrisomy21() {
+            karyotypeSvg.innerHTML = '';
+            
+            // Autosomes (paires 1-22)
+            for (let i = 0; i < 7; i++) {
+                for (let j = 0; j < 2; j++) {
+                    const x = 50 + i * 100;
+                    const y = 30 + j * 80;
+                    const width = 20 + (7 - i) * 3;
+                    const height = 60 - i * 5;
+                    
+                    const chromosome = drawChromosome(x, y, width, height);
+                    karyotypeSvg.appendChild(chromosome);
+                }
+            }
+            
+            // Troisième chromosome 21 (plus petit)
+            const extraChromosome = drawChromosome(250, 190, 18, 40, false, false, true);
+            extraChromosome.setAttribute("transform", "rotate(10, 259, 210)");
+            karyotypeSvg.appendChild(extraChromosome);
+            
+            // Chromosomes sexuels
+            const xChromosome = drawChromosome(750, 30, 25, 50, true);
+            const yChromosome = drawChromosome(750, 110, 15, 40, false, true);
+            karyotypeSvg.appendChild(xChromosome);
+            karyotypeSvg.appendChild(yChromosome);
+            
+            // Ajouter des étiquettes
+            const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            label.setAttribute("x", 400);
+            label.setAttribute("y", 180);
+            label.setAttribute("text-anchor", "middle");
+            label.setAttribute("font-size", "16");
+            label.setAttribute("fill", "#2C3E50");
+            label.textContent = "Trisomie 21 (Syndrome de Down): 47,XX,+21 ou 47,XY,+21";
+            karyotypeSvg.appendChild(label);
+        }
+        
+        // Fonction pour dessiner un caryotype avec syndrome de Turner
+        function drawTurnerSyndrome() {
+            karyotypeSvg.innerHTML
